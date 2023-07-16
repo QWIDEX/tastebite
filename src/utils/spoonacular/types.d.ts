@@ -1,0 +1,38 @@
+export interface Recipe {
+  aggregateLikes: number;
+  analyzedInstructions: any[];
+  cheap: boolean;
+  cookingMinutes: number;
+  creditsText: string;
+  cuisines: Array<string>;
+  dairyFree: boolean;
+  diets: string[];
+  dishTypes: string[];
+  extendedIngredients: any[];
+  gaps: string;
+  glutenFree: boolean;
+  healthScore: number;
+  id: number;
+  image: string;
+  imageType: string;
+  instructions: string;
+  license: string;
+  lowFodmap: boolean;
+  occasions: string[];
+  originalId: string | null;
+  preparationMinutes: number;
+  pricePerServing: number;
+  readyInMinutes: number;
+  servings: number;
+  sourceName: string;
+  sourceUrl: string;
+  spoonacularSourceUrl: string;
+  summary: string;
+  sustainable: boolean;
+  title: string;
+  vegan: boolean;
+  vegetarian: boolean;
+  veryHealthy: boolean;
+  veryPopular: boolean;
+  weightWatcherSmartPoints: number;
+}
