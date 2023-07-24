@@ -5,12 +5,12 @@ import Link from "next/link";
 export default function Header() {
   return (
     <div className="flex flex-col gap-10 items-center p-5">
-      <Link href="/" className="w-full">
+      <Link href="/" className="w-fit mx-auto">
         <Image
           priority={true}
           src={logo}
-          height={255}
-          width={78}
+          height={78}
+          width={255}
           className="max-w-[250px] !aspect-auto !h-auto mx-auto !w-full"
           alt="ok"
         />
