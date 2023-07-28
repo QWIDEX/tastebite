@@ -16,14 +16,14 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   const { image, title, sourceName, sourceUrl, id } = recipe;
 
   return (
-    <div className="p-5 flex flex-col justify-between rounded-lg max-w-[540px] w-full gap-4 bg-white shadow-md border-gray-200 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 group">
+    <div className="p-5 flex flex-col justify-between rounded-lg max-w-[490px] w-full gap-4 bg-gray-50 shadow-md border-gray-200 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 group">
       <Link
         href={`/recipes/${id}`}
         className="flex h-[87%] flex-col justify-between"
       >
         <Image
           src={image}
-          width={500}
+          width={450}
           unoptimized
           height={281.25}
           alt={title}

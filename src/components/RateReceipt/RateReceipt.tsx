@@ -10,7 +10,7 @@ const RateProduct = ({
   size: number;
   initialRating: number;
   editing: boolean;
-}) => {
+}): React.ReactElement => {
   const currentRating: any = useRef();
   const [stars, setStars] = useState<string[]>([]);
   const [rating, setRating] = useState<number>(initialRating);

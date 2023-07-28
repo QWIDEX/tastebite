@@ -2,21 +2,21 @@ import Image from "next/image";
 import logo from "@/images/logo.png";
 import Link from "next/link";
 
-export default function Header() {
+export default function Header(): React.ReactElement {
   return (
-    <div className="flex flex-col gap-10 items-center p-5">
-      <Link href="/" className="w-fit mx-auto">
+    <>
+      <Link href="/" className="w-fit mx-auto block mt-6 mb-10">
         <Image
           priority={true}
           src={logo}
           height={78}
           width={255}
           className="max-w-[250px] !aspect-auto !h-auto mx-auto !w-full"
-          alt="ok"
+          alt="logo"
         />
       </Link>
-      <div className="sticky flex items-center justify-between rounded-br-full rounded-bl-full w-3/4 bg-white border-slate-200 border min-h-[40px] px-10 py-2">
-        <button className="group">
+      <div className="sticky shadow-md mx-auto justify-items-center mb-10 z-50 top-0 grid grid-cols-6 rounded-br-full rounded-bl-full w-3/4 bg-white border-slate-200 border min-h-[40px] px-10 py-2">
+        <button className="group w-fit justify-self-start">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="28"
@@ -32,23 +32,29 @@ export default function Header() {
         </button>
         <Link
           href="/"
-          className="font-medium hover:text-[#ff642f] transition-all duration-300"
+          className="font-medium w-fit hover:text-[#ff642f] transition-all duration-300"
         >
           Home
         </Link>
         <Link
           href="/recipes"
-          className="font-medium hover:text-[#ff642f] transition-all duration-300"
+          className="font-medium w-fit hover:text-[#ff642f] transition-all duration-300"
         >
           Recipes
         </Link>
         <Link
+          href="/recipes/categories"
+          className="font-medium w-fit hover:text-[#ff642f] transition-all duration-300"
+        >
+          Categories
+        </Link>
+        <Link
           href="/favorites"
-          className="font-medium hover:text-[#ff642f] transition-all duration-300"
+          className="font-medium w-fit hover:text-[#ff642f] transition-all duration-300"
         >
           Favorites
         </Link>
-        <button className="group">
+        <button className="group w-fit justify-self-end">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="28"
@@ -69,6 +75,6 @@ export default function Header() {
           </svg>
         </button>
       </div>
-    </div>
+    </>
   );
 }

@@ -36,3 +36,59 @@ export interface Recipe {
   veryPopular: boolean;
   weightWatcherSmartPoints: number;
 }
+
+export type cuisines =
+  | "african"
+  | "asian"
+  | "american"
+  | "british"
+  | "cajun"
+  | "caribbean"
+  | "chinese"
+  | "eastern european"
+  | "european"
+  | "french"
+  | "german"
+  | "greek"
+  | "indian"
+  | "irish"
+  | "italian"
+  | "japanese"
+  | "jewish"
+  | "korean"
+  | "latin american"
+  | "mediterranean"
+  | "mexican"
+  | "middle eastern"
+  | "nordic"
+  | "southern"
+  | "spanish"
+  | "thai"
+  | "vietnamese";
+
+export type diets =
+  | "Gluten Free"
+  | "Whole30"
+  | "Low FODMAP"
+  | "Primal"
+  | "Paleo"
+  | "Pescetarian"
+  | "Vegan"
+  | "Ovo-Vegetarian"
+  | "Lacto-Vegetarian"
+  | "Vegetarian"
+  | "Ketogenic";
+
+export type intolerances =
+  | "Dairy"
+  | "Egg"
+  | "Gluten"
+  | "Grain"
+  | "Peanut"
+  | "Seafood"
+  | "Sesame"
+  | "Shellfish"
+  | "Soy"
+  | "Sulfite"
+  | "Tree Nut"
+  | "Wheat";
