@@ -24,7 +24,7 @@ export default function RecipesSwiper({ recipes }: { recipes: Recipe[] }) {
       modules={[Autoplay, Pagination, Navigation]}
     >
       {recipes.map((recipe) => (
-        <SwiperSlide>
+        <SwiperSlide key={recipe.id}>
           <div className="w-[90%] max-w-[1500px] relative mx-auto aspect-video">
             <img
               src={recipe.image}
