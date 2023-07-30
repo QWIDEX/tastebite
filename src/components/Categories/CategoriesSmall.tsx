@@ -12,7 +12,8 @@ export default function CategoriesSmall(): React.ReactElement {
       <h1 className="text-4xl font-semibold mb-5 leading-normal font-serif">
         Popular Categories
       </h1>
-      <div className="flex gap-7 flex-wrap justify-around">
+      <div className="flex gap-7 flex-wrap justify-between">
+        {/* document.documentElement.scrollWidth / 3 - 40 > 156 ? 156 : document.documentElement.scrollWidth / 3 - 40 */}
         <Category label="Pasta" src={pastaImg} />
         <Category label="Pizza" src={pizzaImg} />
         <Category label="Deserts" src={desertsImg} />

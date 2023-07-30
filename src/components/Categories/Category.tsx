@@ -13,7 +13,10 @@ const Category = ({
   className?: string;
 }): React.ReactElement => {
   return (
-    <div className="flex group justify-center cursor-pointer items-center gap-2 flex-col">
+    <div
+      className="flex group justify-center cursor-pointer items-center gap-2 flex-col"
+      style={{ width: `${size}px` }}
+    >
       <Image
         height={size}
         className="rounded-full group-hover:scale-[105%] shadow-md group-hover:shadow-lg transition-all duration-300"

@@ -31,11 +31,11 @@ export default function RecipesSwiper({ recipes }: { recipes: Recipe[] }) {
               alt={recipe.title}
               className="w-full rounded-3xl aspect-video"
             />
-            <div className="absolute p-14 pb-40 flex flex-col justify-end gap-7 top-0 left-0 h-full w-full bg-[rgba(0,0,0,.3)] rounded-3xl">
-              <h1 className="text-white text-7xl w-[80%] font-serif">
+            <div className="absolute p-14 pb-[13%] flex flex-col justify-end sm:gap-7 gap-1 top-0 left-0 h-full w-full bg-[rgba(0,0,0,.3)] rounded-3xl">
+              <h1 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-6xl xl:text-7xl w-[80%] font-serif">
                 {recipe.title}
               </h1>
-              <h3 className="text-white text-xl w-[80%]">
+              <h3 className="text-white md:text-xl text-lg w-[80%]">
                 by {recipe.sourceName}
               </h3>
             </div>
