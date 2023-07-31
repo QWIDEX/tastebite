@@ -2,9 +2,17 @@ import { Recipe } from "@/utils/spoonacular/types";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Catalog({ recipes = [] }: { recipes: Array<Recipe> }) {
+export default function Catalog({
+  recipes = [],
+  className = "",
+}: {
+  recipes: Array<Recipe>;
+  className?: string;
+}) {
   return (
-    <div className="flex flex-wrap w-full justify-center relative left-1/2 -translate-x-1/2  mx-auto px-[auto] p-5 gap-x-5 gap-y-4">
+    <div
+      className={`flex flex-wrap w-full justify-center relative left-1/2 -translate-x-1/2  mx-auto px-[auto] gap-x-5 gap-y-4 ${className}`}
+    >
       {recipes.map((recipe) => (
         <RecipeCard key={recipe.id} recipe={recipe} />
       ))}

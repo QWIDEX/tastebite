@@ -31,3 +31,13 @@
 .swiper-button-next::after {
   content: "";
 }
+
+@media (max-width: 640px) {
+  .swiper-button-next {
+    display: none;
+  }
+
+  .swiper-button-prev {
+    display: none;
+  }
+}

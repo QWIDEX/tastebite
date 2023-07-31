@@ -11,7 +11,7 @@ export default function Header(): React.ReactElement {
     <>
       <Link
         href="/"
-        className="w-1/3 max-w-[250px] min-w-[150px] mx-auto block mt-6 mb-10"
+        className="w-1/3 max-w-[250px] min-w-[150px] mx-auto block mt-6 mb-5 sm:mb-10"
       >
         <Image
           priority={true}

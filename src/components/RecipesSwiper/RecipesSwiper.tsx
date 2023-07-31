@@ -6,6 +6,7 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./RecipesSwiper.css";
+import Link from "next/link";
 
 export default function RecipesSwiper({ recipes }: { recipes: Recipe[] }) {
   return (
@@ -29,13 +30,16 @@ export default function RecipesSwiper({ recipes }: { recipes: Recipe[] }) {
             <img
               src={recipe.image}
               alt={recipe.title}
-              className="w-full rounded-3xl aspect-video"
+              className="w-full rounded-3xl aspect-square sm:aspect-video"
             />
-            <div className="absolute p-14 pb-[13%] flex flex-col justify-end sm:gap-7 gap-1 top-0 left-0 h-full w-full bg-[rgba(0,0,0,.3)] rounded-3xl">
-              <h1 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-6xl xl:text-7xl w-[80%] font-serif">
+            <div className="absolute sm:p-14 p-5 pb-[13%] flex flex-col justify-end sm:gap-7 gap-1 top-0 left-0 h-full w-full bg-[rgba(0,0,0,.3)] rounded-3xl">
+              <Link
+                href={`catalog/${recipe.id}`}
+                className="text-white text-lg sm:text-2xl md:text-3xl lg:text-6xl xl:text-7xl w-full sm:w-[80%] font-serif"
+              >
                 {recipe.title}
-              </h1>
-              <h3 className="text-white md:text-xl text-lg w-[80%]">
+              </Link>
+              <h3 className="text-white  md:!text-xl text-xs sm:!text-lg w-[80%]">
                 by {recipe.sourceName}
               </h3>
             </div>

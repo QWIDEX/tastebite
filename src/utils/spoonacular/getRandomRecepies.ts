@@ -1,3 +1,4 @@
+import randomRecipes from "./RecipesInitial";
 import { Recipe } from "./types";
 
 export default async function getRandomRecipes(
