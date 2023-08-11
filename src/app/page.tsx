@@ -8,7 +8,7 @@ import { Recipe } from "@/utils/spoonacular/types";
 export default async function Home() {
   let error: Error | boolean = false;
   let recipes: Recipe[] = [];
-  await getRandomRecepies(5)
+  await getRandomRecepies(5, "", 86400)
     .then((data) => (recipes = data))
     .catch((err) => (error = err));
 

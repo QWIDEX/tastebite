@@ -1,10 +1,8 @@
-import React from "react";
-
 const H1 = ({
   children,
   className = "",
 }: {
-  children: string;
+  children: React.ReactNode;
   className?: string;
 }) => {
   return (

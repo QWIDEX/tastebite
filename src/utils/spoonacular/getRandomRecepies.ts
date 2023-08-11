@@ -1,27 +1,26 @@
 import randomRecipes from "./RecipesInitial";
-import { Recipe } from "./types";
+import type { Recipe } from "./types";
 
 export default async function getRandomRecipes(
   count: number = 1,
-  tags: string = ""
+  tags: string = "",
+  revalidate?: number
 ): Promise<Recipe[]> {
   if (count <= 0) {
     throw new Error("Count must be a positive number.");
   }
 
-  const apiKey = process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY;
-
   try {
     const req = await fetch(
-      `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=${count}&tags=${tags}&limitLicense=true`
+      `http://localhost:3000/api/recipes/random?number=${count}&tags=${tags}&limitLicense=true`,
+      { next: { revalidate: revalidate } }
     );
 
     if (!req.ok) {
       throw new Error(`Request failed with status: ${req.status}`);
     }
 
-    const response = await req.json();
-    const recipes = response.recipes;
+    const recipes: Recipe[] = await req.json();
 
     return recipes;
   } catch (error: any) {
