@@ -4,8 +4,14 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin", "cyrillic"] });
-const playfairDisplay = Playfair_Display({ subsets: ["latin", "cyrillic"] });
+const inter = Inter({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-inter",
+});
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-playfair-display",
+});
 
 export const metadata: Metadata = {
   title: "TasteBite",
@@ -20,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} !font-sans ${playfairDisplay.className}`}
+        className={`${inter.variable} !font-sans ${playfairDisplay.variable}`}
       >
         <Header />
         <main>{children}</main>

@@ -37,6 +37,17 @@ export interface Recipe {
   weightWatcherSmartPoints: number;
 }
 
+export interface RecipeWithNutritions extends Recipe {
+  nutrition: {
+    nutrients: any[];
+    weightPerServing: any[];
+    caloricBreakdown: any[];
+    ingredients: any[];
+    flavonoids: any[];
+    properties: any[];
+  };
+}
+
 export type cuisines =
   | "african"
   | "asian"

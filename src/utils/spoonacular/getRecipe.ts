@@ -1,4 +1,4 @@
-import type { Recipe } from "./types";
+import type { RecipeWithNutritions } from "./types";
 
 const getRecipe = async (id: number | string) => {
   try {
@@ -10,7 +10,7 @@ const getRecipe = async (id: number | string) => {
       throw new Error(`Request failed with status: ${req.status}`);
     }
 
-    const recipe: Recipe = await req.json();
+    const recipe: RecipeWithNutritions = await req.json();
 
     return recipe;
   } catch (error: any) {

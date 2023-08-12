@@ -1,14 +1,15 @@
+"use client";
 import { useEffect, useRef, useState } from "react";
 
-const RateProduct = ({
+const RateReceipt = ({
   className = "",
   size = 20,
   initialRating = 0,
   editing = false,
 }: {
-  className: string;
-  size: number;
-  initialRating: number;
+  className?: string;
+  size?: number;
+  initialRating?: number;
   editing: boolean;
 }): React.ReactElement => {
   const currentRating: any = useRef();
@@ -73,7 +74,7 @@ const RateProduct = ({
   );
 };
 
-export default RateProduct;
+export default RateReceipt;
 
 const Star = ({
   type,

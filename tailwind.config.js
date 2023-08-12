@@ -8,8 +8,8 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      sans: "Inter",
-      serif: "PlayfairDisplay",
+      sans: "var(--font-inter)",
+      serif: "var(--font-playfair-display)",
     },
   },
   plugins: [],
