@@ -1,4 +1,4 @@
-const H1 = ({
+const H2 = ({
   children,
   className = "",
 }: {
@@ -6,10 +6,12 @@ const H1 = ({
   className?: string;
 }) => {
   return (
-    <h1 className={`font-serif text-5xl font-semibold  ${className}`}>
+    <h1
+      className={`sm:text-4xl text-3xl font-semibold font-serif ${className}`}
+    >
       {children}
     </h1>
   );
 };
 
-export default H1;
+export default H2;

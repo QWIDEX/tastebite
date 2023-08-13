@@ -1,4 +1,4 @@
-export interface Recipe {
+export interface RawRecipe {
   aggregateLikes: number;
   analyzedInstructions: any[];
   cheap: boolean;
@@ -37,7 +37,18 @@ export interface Recipe {
   weightWatcherSmartPoints: number;
 }
 
-export interface RecipeWithNutritions extends Recipe {
+export interface Recipe extends RecipeReviews, RawRecipe {}
+
+export interface SimilarRecipe {
+  id: number;
+  imageType: string;
+  title: string;
+  readyInMinutes: number;
+  servings: number;
+  sourceUrl: string;
+}
+
+export interface RawRecipeWithNutritions extends RawRecipe {
   nutrition: {
     nutrients: any[];
     weightPerServing: any[];
@@ -47,6 +58,10 @@ export interface RecipeWithNutritions extends Recipe {
     properties: any[];
   };
 }
+
+export interface RecipeWithNutritions
+  extends RecipeReviews,
+    RawRecipeWithNutritions {}
 
 export type cuisines =
   | "african"

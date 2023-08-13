@@ -1,6 +1,6 @@
-import type { Recipe } from "./types";
+import type { RawRecipe } from "./types";
 
-const randomRecipes: Recipe[] = [
+const randomRecipes: RawRecipe[] = [
   {
     vegetarian: false,
     vegan: false,

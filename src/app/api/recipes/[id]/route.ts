@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import type { Recipe } from "@/utils/spoonacular/types";
+import type { RawRecipe, Recipe } from "@/services/spoonacular/types";
+import getRecipeReviews from "@/utils/mongoDB/getRecipeReviews";
 
 export const GET = async (
   req: Request,
@@ -13,11 +14,13 @@ export const GET = async (
     { cache: "force-cache" }
   );
 
+  const reviews = await getRecipeReviews(id);
+
   if (!spoonReq.ok) {
     throw new Error(`Request failed with status: ${spoonReq.status}`);
   }
 
-  const recipes: Recipe[] = await spoonReq.json();
+  const recipes: RawRecipe[] = await spoonReq.json();
 
-  return NextResponse.json(recipes);
+  return NextResponse.json({ ...recipes, ...reviews });
 };

@@ -1,8 +1,14 @@
+import Catalog from "@/components/Catalog/Catalog";
 import RateReceipt from "@/components/RateReceipt/RateReceipt";
-import H1 from "@/ui/H1";
-import getRecipe from "@/utils/spoonacular/getRecipe";
+import SmallRecipeCard from "@/components/RecipeCards/SmallRecipeCard";
+import H2 from "@/ui/H2";
+import getRecipe from "@/services/spoonacular/getRecipe";
 import { Metadata } from "next";
 import Image from "next/image";
+import getSimilarRecipes from "@/services/spoonacular/getSimilarRecipes";
+import H1 from "@/ui/H1";
+import SquareButton from "@/ui/SquareButton";
+import getRandomRecipes from "@/services/spoonacular/getRandomRecepies";
 
 type Props = {
   params: {
@@ -50,10 +56,12 @@ export default async function Recipe({ params: { id } }: Props) {
     nutrition,
   } = await getRecipe(id);
 
+  const similarRecipes = await getSimilarRecipes(id, 100);
+
   return (
     <div className="w-4/5 mx-auto">
       <div>
-        <h1 className="font-serif text-5xl font-semibold ">{title}</h1>
+        <H1>{title}</H1>
         <div className="flex items-center mb-20 after:w-full relative after:absolute after:content-[''] after:-bottom-8 after:h-0.5 after:rounded-full after:bg-gray-200 rounded-lg gap-5 mt-7">
           <a
             className="font-medium text-lg transition-all duration-300 hover:text-blue-400 "
@@ -75,7 +83,7 @@ export default async function Recipe({ params: { id } }: Props) {
           alt={title}
         />
       </div>
-      <div className="mt-14 flex gap-5">
+      <div className="mt-10 flex gap-5">
         <div className="w-2/3 after:absolute relative after:h-full after:rounded-full after:w-0.5 after:bg-gray-200 rounded-lg  after:top-0 after:-right-2 pr-5">
           <div className="flex gap-7 ">
             <div className="relative after:absolute after:h-full after:-right-3.5 after:w-0.5 after:bg-gray-200 rounded-lg  after:rounded-full after:content-[''] after:top-0">
@@ -87,23 +95,31 @@ export default async function Recipe({ params: { id } }: Props) {
               <p className="uppercase text-center">{servings} people</p>
             </div>
           </div>
-          <div className="mt-10">
-            <H1 className="">Ingredients</H1>
+          <div className="mt-7">
+            <H2 className="">Ingredients</H2>
             <ul className="ml-5 mt-4">
-              {extendedIngredients.map((ingridient) => (
-                <li className="relative before:absolute before:rounded-full before:-left-4 before:h-2.5 before:w-2.5 before:border-[2px] before:border-black before:top-[50%] before:translate-y-[-50%] my-1.5 text-lg">
-                  {ingridient.original}
-                </li>
-              ))}
+              {extendedIngredients.map((ingridient, idx, arr) =>
+                arr.findIndex((ingrid) => ingrid.id === ingridient.id) ===
+                idx ? (
+                  <li
+                    key={ingridient.id}
+                    className="relative before:absolute before:rounded-full before:-left-4 before:h-2.5 before:w-2.5 before:border-[2px] before:border-black before:top-[50%] before:translate-y-[-50%] my-1.5 text-lg"
+                  >
+                    {ingridient.original}
+                  </li>
+                ) : (
+                  <></>
+                )
+              )}
             </ul>
           </div>
           <div className="mt-7">
-            <H1>Instructions</H1>
+            <H2>Instructions</H2>
             <ol className="ml-7 list-decimal mt-4">
               {analyzedInstructions[0].steps.map((step: any) => (
                 <li
                   key={step.number}
-                  className={`relative before:absolute marker:text-white marker:font-medium before:-left-[26px] before:h-[26px] before:top-[1px] before:content-[''] before:w-[26px] before:text-base before:bg-[#ff642f] before:-z-10  before:rounded-full before:p-0.5  before:block my-1.5 text-lg`}
+                  className={`relative before:absolute marker:text-white marker:font-medium before:-left-[26.5px] before:h-[26px] before:top-[1px] before:content-[''] before:w-[26px] before:text-base before:bg-[#ff642f] before:-z-10  before:rounded-full before:p-0.5  before:block my-1.5 text-lg`}
                 >
                   {step.step}
                 </li>
@@ -111,9 +127,9 @@ export default async function Recipe({ params: { id } }: Props) {
             </ol>
           </div>
         </div>
-        <div className="w-1/3 pl-5">
-          <div className="bg-gray-50 shadow last:after:hidden rounded-lg max-w-[350px] ml-auto py-10 px-5">
-            <H1>Nutrition Facts</H1>
+        <div className="w-1/3 pl-5 flex flex-col items-end">
+          <div className="bg-gray-50 shadow last:after:hidden rounded-lg max-w-[350px]  py-10 px-5">
+            <H2>Nutrition Facts</H2>
             <ul className="mt-3">
               {nutrition.nutrients.map((nutrient) => {
                 if (
@@ -132,16 +148,52 @@ export default async function Recipe({ params: { id } }: Props) {
                   return (
                     <li
                       key={nutrient.name}
-                      className="my-1.5 text-lg after:absolute relative after:w-full after:h-0.5 after:bg-gray-200 after:left-0 after:-bottom-1  "
+                      className="my-1.5 text-lg flex justify-between after:absolute relative after:w-full after:h-0.5 after:bg-gray-200 after:left-0 after:-bottom-1  "
                     >
-                      {nutrient.name} {nutrient.amount} {nutrient.unit}
+                      <span>{nutrient.name}</span>
+                      <span>
+                        {nutrient.amount} {nutrient.unit}
+                      </span>
                     </li>
                   );
-                } else return null;
+                } else return <></>;
               })}
             </ul>
           </div>
+          {similarRecipes.length > 0 ? (
+            <div className="mt-7 w-[300px]">
+              <H2 className="!w-fit">Simmilar Recipes</H2>
+              <Catalog
+                RecipeCard={SmallRecipeCard}
+                className="mt-4"
+                recipes={similarRecipes}
+              />
+            </div>
+          ) : (
+            <div className="mt-7 w-[300px]">
+              <H2 className="!w-fit">Fresh Recipes</H2>
+              <Catalog
+                RecipeCard={SmallRecipeCard}
+                className="mt-4"
+                recipes={await getRandomRecipes(5)}
+              />
+            </div>
+          )}
+
+          {/* TODO: Make and insert here mail subscription*/}
         </div>
+      </div>
+      <div className="mt-28">
+        <H1>Already made this?</H1>
+        <SquareButton className="mt-10 mb-10">Share Your Feedback</SquareButton>
+        <div className="h-2 w-full rounded-sm bg-[#ff642f]"></div>
+      </div>
+      <div className="mt-28">
+        <div className="w-full relative after:absolute after:rounded-full after:bg-slate-200 after:h-0.5 after:w-full after:-bottom-5 mb-14 after:left-0">
+          <H1 className="w-fit">Comments</H1>
+          <span></span>
+        </div>
+        <div></div>
       </div>
     </div>
   );

@@ -1,14 +1,14 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Recipe } from "@/utils/spoonacular/types";
+import { RawRecipe } from "@/services/spoonacular/types";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./RecipesSwiper.css";
 import Link from "next/link";
 
-export default function RecipesSwiper({ recipes }: { recipes: Recipe[] }) {
+export default function RecipesSwiper({ recipes }: { recipes: RawRecipe[] }) {
   return (
     <Swiper
       loop={true}

@@ -5,7 +5,7 @@ import smoothiesImg from "@/images/categories/Smoothies.png";
 import meatImg from "@/images/categories/Meat.png";
 import sandwichesImg from "@/images/categories/Sandwiches.png";
 import Category from "./Category";
-import H1 from "@/ui/H1";
+import H2 from "@/ui/H2";
 
 export default function CategoriesSmall({
   className = "",
@@ -14,7 +14,7 @@ export default function CategoriesSmall({
 }): React.ReactElement {
   return (
     <div className={className}>
-      <H1 className="mb-5">Popular Categories</H1>
+      <H2 className="mb-5">Popular Categories</H2>
       <div className="flex gap-5 flex-wrap justify-between">
         <Category
           label="Pasta"

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import type { Recipe } from "@/utils/spoonacular/types";
+import type { RawRecipe } from "@/services/spoonacular/types";
+import getRecipeReviews from "@/utils/mongoDB/getRecipeReviews";
 
 export const GET = async (req: NextRequest) => {
   const apiKey = process.env.SPOONACULAR_API_KEY;
@@ -15,7 +16,13 @@ export const GET = async (req: NextRequest) => {
     throw new Error(`Request failed with status: ${spoonReq.status}`);
   }
 
-  const recipes: Recipe[] = (await spoonReq.json()).recipes;
+  const recipesRaw: RawRecipe[] = (await spoonReq.json()).recipes;
+
+  const recipes = await Promise.all(
+    recipesRaw.map((recipe: RawRecipe) => {
+      return { ...recipe, ...getRecipeReviews(recipe.id.toString()) };
+    })
+  );
 
   return NextResponse.json(recipes, { status: spoonReq.status });
 };
