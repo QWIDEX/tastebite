@@ -19,7 +19,7 @@ export default async function getRecipeReviews(
 
     if (!recipeReviews) {
       const objectId = new ObjectId();
-      await recipesReviews.insertOne({ _id: objectId, reviews: [] });
+      await recipesReviews.insertOne({ _id: objectId, reviews: [], id });
       console.log(objectId.toString());
       recipeReviews = {
         _id: objectId,
@@ -30,6 +30,7 @@ export default async function getRecipeReviews(
       recipeReviews = { ...recipeReviews, docId: recipeReviews._id.toString() };
     }
 
+    if (recipeReviews.id) delete recipeReviews.id;
     delete recipeReviews._id;
 
     return recipeReviews;

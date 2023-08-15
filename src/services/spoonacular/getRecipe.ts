@@ -3,7 +3,8 @@ import type { RecipeWithNutritions } from "./types";
 const getRecipe = async (id: number | string) => {
   try {
     const req = await fetch(
-      `http://localhost:3000/api/recipes/${id}?includeNutrition=true`
+      `http://localhost:3000/api/recipes/${id}?includeNutrition=true`,
+      { cache: "force-cache" }
     );
 
     if (!req.ok) {

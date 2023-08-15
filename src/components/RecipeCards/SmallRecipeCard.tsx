@@ -13,7 +13,7 @@ const SmallRecipeCard = ({
 }) => {
   return (
     <Link
-      href={`/recipes/${recipe.id}`}
+      href={`/recipe/${recipe.id}`}
       className={`w-[300px] group flex gap-3 ${className}`}
     >
       <Image

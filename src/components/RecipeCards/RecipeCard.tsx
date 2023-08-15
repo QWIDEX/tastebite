@@ -8,7 +8,7 @@ const RecipeCard = ({ recipe }: { recipe: RawRecipe }) => {
   return (
     <div className="p-5 flex flex-col justify-between rounded-lg max-w-[490px] w-full gap-4 bg-gray-50 shadow-md border-gray-200 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 group">
       <Link
-        href={`/recipes/${id}`}
+        href={`/recipe/${id}`}
         className="flex h-[87%] flex-col justify-between"
       >
         <Image

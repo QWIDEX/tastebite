@@ -22,7 +22,7 @@ export default function Header(): React.ReactElement {
           alt="logo"
         />
       </Link>
-      <header className="sticky shadow-md mx-auto justify-items-center  w-11/12 lg:w-3/4 mb-10 z-50 top-0  rounded-br-full  rounded-bl-full  bg-white border-slate-200 border min-h-[50px] px-5 sm:!px-10 py-2">
+      <header className="sticky shadow-md mx-auto justify-items-center  w-11/12 lg:w-3/4 mb-10 z-30 top-0  rounded-br-full  rounded-bl-full  bg-white border-slate-200 border min-h-[50px] px-5 sm:!px-10 py-2">
         <div className="relative grid justify-items-center h-full grid-cols-3 place-items-center sm:grid-cols-6">
           <SearchHandler className="z-20" />
           <Link

@@ -8,6 +8,6 @@ export interface RecipeReviews {
       comment: string;
       rating: number;
       userId: number | string;
-    }
+    }?
   ];
 }

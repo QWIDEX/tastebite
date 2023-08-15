@@ -7,8 +7,8 @@ import { Metadata } from "next";
 import Image from "next/image";
 import getSimilarRecipes from "@/services/spoonacular/getSimilarRecipes";
 import H1 from "@/ui/H1";
-import SquareButton from "@/ui/SquareButton";
 import getRandomRecipes from "@/services/spoonacular/getRandomRecepies";
+import RecipeCreateReview from "@/components/RecipeCreateReview/RecipeCreateReview";
 
 type Props = {
   params: {
@@ -54,12 +54,13 @@ export default async function Recipe({ params: { id } }: Props) {
     extendedIngredients,
     analyzedInstructions,
     nutrition,
+    reviews,
   } = await getRecipe(id);
 
   const similarRecipes = await getSimilarRecipes(id, 100);
 
   return (
-    <div className="w-4/5 mx-auto">
+    <div className="xl:w-4/5 sm:px-7 px-3 mx-auto">
       <div>
         <H1>{title}</H1>
         <div className="flex items-center mb-20 after:w-full relative after:absolute after:content-[''] after:-bottom-8 after:h-0.5 after:rounded-full after:bg-gray-200 rounded-lg gap-5 mt-7">
@@ -83,8 +84,8 @@ export default async function Recipe({ params: { id } }: Props) {
           alt={title}
         />
       </div>
-      <div className="mt-10 flex gap-5">
-        <div className="w-2/3 after:absolute relative after:h-full after:rounded-full after:w-0.5 after:bg-gray-200 rounded-lg  after:top-0 after:-right-2 pr-5">
+      <div className="mt-10 flex lg:flex-row items-center lg:items-start flex-col gap-5">
+        <div className="lg:w-2/3 after:absolute after:hidden lg:after:block relative after:h-full after:rounded-full after:w-0.5 after:bg-gray-200 rounded-lg  after:top-0 after:-right-2 lg:pr-5">
           <div className="flex gap-7 ">
             <div className="relative after:absolute after:h-full after:-right-3.5 after:w-0.5 after:bg-gray-200 rounded-lg  after:rounded-full after:content-[''] after:top-0">
               <h4 className="text-gray-400 text-center uppercase">prep time</h4>
@@ -127,7 +128,7 @@ export default async function Recipe({ params: { id } }: Props) {
             </ol>
           </div>
         </div>
-        <div className="w-1/3 pl-5 flex flex-col items-end">
+        <div className="lg:w-1/3 w-full lg:pl-5 flex lg:flex-col justify-between flex-wrap lg:items-end">
           <div className="bg-gray-50 shadow last:after:hidden rounded-lg max-w-[350px]  py-10 px-5">
             <H2>Nutrition Facts</H2>
             <ul className="mt-3">
@@ -161,7 +162,7 @@ export default async function Recipe({ params: { id } }: Props) {
             </ul>
           </div>
           {similarRecipes.length > 0 ? (
-            <div className="mt-7 w-[300px]">
+            <div className="lg:mt-7 mt-10 w-[300px]">
               <H2 className="!w-fit">Simmilar Recipes</H2>
               <Catalog
                 RecipeCard={SmallRecipeCard}
@@ -170,7 +171,7 @@ export default async function Recipe({ params: { id } }: Props) {
               />
             </div>
           ) : (
-            <div className="mt-7 w-[300px]">
+            <div className="lg:mt-7 mt-10 w-[300px]">
               <H2 className="!w-fit">Fresh Recipes</H2>
               <Catalog
                 RecipeCard={SmallRecipeCard}
@@ -183,15 +184,11 @@ export default async function Recipe({ params: { id } }: Props) {
           {/* TODO: Make and insert here mail subscription*/}
         </div>
       </div>
-      <div className="mt-28">
-        <H1>Already made this?</H1>
-        <SquareButton className="mt-10 mb-10">Share Your Feedback</SquareButton>
-        <div className="h-2 w-full rounded-sm bg-[#ff642f]"></div>
-      </div>
+      <RecipeCreateReview className="mt-28" />
       <div className="mt-28">
         <div className="w-full relative after:absolute after:rounded-full after:bg-slate-200 after:h-0.5 after:w-full after:-bottom-5 mb-14 after:left-0">
-          <H1 className="w-fit">Comments</H1>
-          <span></span>
+          <H1 className="w-fit inline-block mr-1">Comments</H1>
+          <span>({reviews.length})</span>
         </div>
         <div></div>
       </div>

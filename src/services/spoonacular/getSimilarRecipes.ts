@@ -6,7 +6,7 @@ export default async function getSimilarRecipes(
 ) {
   try {
     const req = await fetch(
-      `http://localhost:3000/api/recipes/${id}/similar?&number=${number}`
+      `http://localhost:3000/api/recipes/${id}/similar?number=${number}`
     );
 
     if (!req.ok) {

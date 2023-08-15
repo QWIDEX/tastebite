@@ -6,7 +6,9 @@ const H1 = ({
   className?: string;
 }) => {
   return (
-    <h1 className={`font-serif text-5xl font-semibold  ${className}`}>
+    <h1
+      className={`font-serif sm:text-5xl text-4xl font-semibold  ${className}`}
+    >
       {children}
     </h1>
   );

@@ -1,3 +1,5 @@
+import type { RecipeReviews } from "@/utils/mongoDB/types";
+
 export interface RawRecipe {
   aggregateLikes: number;
   analyzedInstructions: any[];
