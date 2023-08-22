@@ -15,13 +15,13 @@ export const GET = async (req: Request) => {
     throw new Error(`Request failed with status: ${spoonReq.status}`);
   }
 
-  const recipesRaw: RawRecipe[] = (await spoonReq.json()).results;
+  const data = await spoonReq.json();
 
   const recipes = await Promise.all(
-    recipesRaw.map((recipe: RawRecipe) => {
+    data.results.map((recipe: RawRecipe) => {
       return { ...recipe, ...getRecipeReviews(recipe.id.toString()) };
     })
   );
 
-  return NextResponse.json(recipes);
+  return NextResponse.json({ recipes, totalRecipes: data.totalResults });
 };

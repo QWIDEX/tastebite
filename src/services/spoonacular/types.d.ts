@@ -1,5 +1,10 @@
 import type { RecipeReviews } from "@/utils/mongoDB/types";
 
+export interface Recipes {
+  recipes: Recipe[];
+  totalRecipes: number;
+}
+
 export interface RawRecipe {
   aggregateLikes: number;
   analyzedInstructions: any[];
@@ -93,6 +98,20 @@ export type cuisines =
   | "spanish"
   | "thai"
   | "vietnamese";
+
+export type sortOpt =
+  | "random"
+  | "popularity"
+  | "healthiness"
+  | "time"
+  | "price"
+  | "protein"
+  | "sugar"
+  | "alcohol"
+  | "energy"
+  | "caffeine"
+  | "calories"
+  | "fiber";
 
 export type diets =
   | "Gluten Free"

@@ -129,7 +129,7 @@ export default async function Recipe({ params: { id } }: Props) {
           </div>
         </div>
         <div className="lg:w-1/3 w-full lg:pl-5 flex lg:flex-col justify-between flex-wrap lg:items-end">
-          <div className="bg-gray-50 shadow last:after:hidden rounded-lg max-w-[350px]  py-10 px-5">
+          <div className="bg-gray-50 h-fit shadow last:after:hidden rounded-lg max-w-[350px]  py-10 px-5">
             <H2>Nutrition Facts</H2>
             <ul className="mt-3">
               {nutrition.nutrients.map((nutrient) => {
