@@ -3,7 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import RateReceipt from "../RateReceipt/RateReceipt";
 
-const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
+const RecipeCard = ({
+  recipe,
+  className = "",
+}: {
+  recipe: Recipe;
+  className: string;
+}) => {
   const { image, title, sourceName, sourceUrl, id, reviews } = recipe;
 
   const rating =
@@ -15,7 +21,9 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
     }, 0) / (reviews?.length || 1);
 
   return (
-    <div className="p-5 flex flex-col justify-between rounded-lg max-w-[490px] w-[30%] min-w-[300px] bg-gray-50 shadow-md border-gray-200 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 group ">
+    <div
+      className={`p-5 flex flex-col justify-between rounded-lg max-w-[490px] w-full sm:w-[30%] min-w-[300px] bg-gray-50 shadow-md border-gray-200 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 group ${className}`}
+    >
       <Link
         href={`/recipe/${id}`}
         className="flex h-[87%] flex-col justify-between"

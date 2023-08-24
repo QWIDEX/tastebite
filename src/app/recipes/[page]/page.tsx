@@ -3,16 +3,19 @@ import RecipeCard from "@/components/RecipeCards/RecipeCard";
 import getRecipes from "@/services/spoonacular/getRecipes";
 import FiltersFrame from "@/components/FiltersFrame/FiltersFrame";
 import CatalogPageSwitchers from "@/components/CatalogPageSwitchers/CatalogPageSwitchers";
-import emptyPlateImg from "@/images/emptyPlateImg.jpg";
 import Image from "next/image";
 import H3 from "@/ui/H3";
+import emptyPlateImg from "@/images/emptyPlateImg.jpg";
 
 export default async function Recipes({
+  params: { page },
   searchParams,
 }: {
+  params: { page: string };
   searchParams: { [key: string]: any };
 }) {
   const recipes = await getRecipes({
+    offset: (parseInt(page) - 1) * 20,
     count: 20,
     sort: searchParams.sortBy,
     sortDirection: searchParams.sortDir,
@@ -25,7 +28,7 @@ export default async function Recipes({
   return (
     <FiltersFrame
       recipesCount={recipes.totalRecipes}
-      page={1}
+      page={parseInt(page)}
       showedRecipes={20}
       recipesLength={recipes.recipes.length}
     >
@@ -45,9 +48,9 @@ export default async function Recipes({
         )}
         <CatalogPageSwitchers
           searchParams={searchParams}
-          page={1}
-          totalRecipes={recipes.totalRecipes}
           showedRecipes={20}
+          page={parseInt(page)}
+          totalRecipes={recipes.totalRecipes}
         />
       </div>
     </FiltersFrame>

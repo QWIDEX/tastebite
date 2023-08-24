@@ -1,6 +1,80 @@
 "use client";
 import H2 from "@/ui/H2";
-import { useRef, useState } from "react";
+import FiltersCategory from "./FiltersCategory";
+import { useRef } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import type {
+  cuisines,
+  diets,
+  intolerances,
+} from "@/services/spoonacular/types";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import CheckboxInput from "@/ui/CheckbxInput";
+
+type Filters = {
+  excludeCuisine?: cuisines[];
+  cuisines?: cuisines[];
+  diets?: diets[];
+  intolerances?: intolerances[];
+};
+
+const allDiets: diets[] = [
+  "Gluten Free",
+  "Whole30",
+  "Low FODMAP",
+  "Primal",
+  "Paleo",
+  "Vegan",
+  "Ovo-Vegetarian",
+  "Lacto-Vegetarian",
+  "Vegetarian",
+  "Ketogenic",
+];
+
+const allIntolerances: intolerances[] = [
+  "Dairy",
+  "Egg",
+  "Gluten",
+  "Grain",
+  "Peanut",
+  "Seafood",
+  "Sesame",
+  "Shellfish",
+  "Soy",
+  "Sulfite",
+  "Tree Nut",
+  "Wheat",
+];
+
+const allCuisines: cuisines[] = [
+  "African",
+  "Asian",
+  "American",
+  "British",
+  "Cajun",
+  "Caribbean",
+  "Chinese",
+  "Eastern European",
+  "European",
+  "French",
+  "German",
+  "Greek",
+  "Indian",
+  "Irish",
+  "Italian",
+  "Japanese",
+  "Jewish",
+  "Korean",
+  "Latin American",
+  "Mediterranean",
+  "Mexican",
+  "Middle Eastern",
+  "Nordic",
+  "Southern",
+  "Spanish",
+  "Thai",
+  "Vietnamese",
+];
 
 export default function Filters({
   toggleFilters,
@@ -9,27 +83,54 @@ export default function Filters({
   toggleFilters: Function;
   filtersToggled: boolean;
 }) {
-  const filtersBlockRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams()!;
+
+  const filtersBlockRef = useRef<HTMLFormElement>(null);
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      diets: searchParams.get("diets")?.split(",") || undefined,
+      excludeCuisine:
+        searchParams.get("excludeCuisine")?.split(",") || undefined,
+      cuisine: searchParams.get("cuisine")?.split(",") || undefined,
+      intolerances: searchParams.get("intolerances")?.split(",") || undefined,
+    },
+  });
+
+  const handleFiltersSubmit: SubmitHandler<any> = (data: Filters) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    for (const [param, value] of Object.entries(data)) {
+      if (value) {
+        params.set(param, value.toString());
+      }
+    }
+
+    const finalQueryString = params.toString();
+    router.push(pathname + "?" + finalQueryString, { scroll: false });
+  };
 
   return (
-    <div
+    <form
+      onSubmit={handleSubmit(handleFiltersSubmit)}
       ref={filtersBlockRef}
       style={
         filtersToggled
           ? {
-              minWidth: "200px",
+              minWidth: "300px",
               left: "0px",
               width: "25%",
               padding: "20px",
             }
           : {
               minWidth: "0px",
-              left: `-${filtersBlockRef.current?.scrollWidth}px`,
+              left: `-100%`,
               width: "0px",
               padding: "0px",
             }
       }
-      className="w-1/4 py-7 min-w-[200px] px-5 relative rounded-tr-md left-0 rounded-br-md bg-gray-50 shadow-md transition-all duration-300"
+      className="sm:w-1/4 w-3/4 h-fit py-7 min-w-[300px] px-5 sm:relative absolute rounded-tr-md left-0 rounded-br-md bg-gray-50 shadow-md transition-all duration-[600ms] sm:duration-300"
     >
       <H2>Filters</H2>
       <button
@@ -50,6 +151,72 @@ export default function Filters({
           />
         </svg>
       </button>
-    </div>
+      <FiltersCategory label="Diets">
+        {allDiets.map((diet) => (
+          <CheckboxInput key={diet} register={register("diets")} value={diet}>
+            {diet}
+          </CheckboxInput>
+        ))}
+      </FiltersCategory>
+      <FiltersCategory label="Intolerances">
+        {allIntolerances.map((intolerance) => (
+          <CheckboxInput
+            key={intolerance}
+            register={register("intolerances")}
+            value={intolerance}
+          >
+            {intolerance}
+          </CheckboxInput>
+        ))}
+      </FiltersCategory>
+      <FiltersCategory label="Cuisines">
+        {allCuisines.map((cuisine) => (
+          <CheckboxInput
+            key={cuisine}
+            register={register("cuisine")}
+            value={cuisine}
+          >
+            {cuisine}
+          </CheckboxInput>
+        ))}
+      </FiltersCategory>
+      <FiltersCategory label="Exclude Cuisines">
+        {allCuisines.map((cuisine) => (
+          <CheckboxInput
+            key={cuisine}
+            register={register("excludeCuisine")}
+            value={cuisine}
+          >
+            {cuisine}
+          </CheckboxInput>
+        ))}
+      </FiltersCategory>
+      <div className=" overflow-hidden bottom-0 w-[100%] justify-between flex mt-7 h-auto">
+        <button
+          type="button"
+          className="px-7 py-2 border border-black rounded-lg text-black font-medium text-lg hover:border-[#ff642f] hover:bg-[#ff642f] transition-all duration-300 hover:text-white"
+          onClick={() => {
+            router.push(pathname);
+            reset(
+              {
+                diets: undefined,
+                excludeCuisine: undefined,
+                cuisine: undefined,
+                intolerances: undefined,
+              },
+              { keepValues: false, keepDefaultValues: false }
+            );
+          }}
+        >
+          Clear
+        </button>
+        <button
+          type="submit"
+          className="px-7 py-2 rounded-lg  hover:bg-[#ff642f] bg-black font-medium text-lg text-white transition-all duration-300"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
   );
 }

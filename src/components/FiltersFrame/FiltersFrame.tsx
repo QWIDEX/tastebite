@@ -7,7 +7,13 @@ import { useCallback } from "react";
 const FiltersFrame = ({
   children,
   recipesCount,
+  page,
+  showedRecipes,
+  recipesLength,
 }: {
+  recipesLength: number;
+  showedRecipes: number;
+  page: number;
   children: React.ReactNode;
   recipesCount: number;
 }) => {
@@ -32,8 +38,8 @@ const FiltersFrame = ({
   );
 
   return (
-    <div>
-      <div className="bg-gray-50 shadow-md w-full mb-7 py-2 px-[10%]  flex items-center justify-between">
+    <>
+      <div className="bg-gray-50 shadow-md w-full mb-7 py-2 px-[5%] sm:flex-row flex-col flex items-center justify-center gap-y-2 sm:justify-between">
         <button
           onClick={toggleFilters}
           className="flex group items-center gap-3"
@@ -59,7 +65,12 @@ const FiltersFrame = ({
         </button>
         <div>
           <span className="font-medium text-lg text-gray-400">
-            Showing 1 / 10 of {recipesCount} recipes
+            Showing {recipesCount !== 0 ? page * showedRecipes + 1 : 0} /{" "}
+            {Math.min(
+              page * showedRecipes + 1 + showedRecipes - 1,
+              recipesCount
+            )}{" "}
+            of {recipesCount} recipes
           </span>
         </div>
         <div className="flex flex-col items-center gap-1">
@@ -115,7 +126,7 @@ const FiltersFrame = ({
         />
         {children}
       </div>
-    </div>
+    </>
   );
 };
 

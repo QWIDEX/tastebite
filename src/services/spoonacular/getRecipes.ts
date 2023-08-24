@@ -7,6 +7,7 @@ const getRecipes = async ({
   cuisines = [],
   diets = [],
   intolerances = [],
+  excludeCuisine = [],
   tags = "",
   sort = "random",
   sortDirection = "desc",
@@ -15,6 +16,7 @@ const getRecipes = async ({
   offset?: number;
   query?: string;
   cuisines?: cuisines[];
+  excludeCuisine?: cuisines[];
   diets?: diets[];
   intolerances?: intolerances[];
   tags?: string;
@@ -27,7 +29,7 @@ const getRecipes = async ({
 
   try {
     const req = await fetch(
-      `http://localhost:3000/api/recipes?number=${count}&tags=${tags}&offset=${offset}&query=${query}&sort=${sort}&sortDirection=${sortDirection}&cuisine=${cuisines.toString()}&diet=${diets.toString()}&intolerances=${intolerances.toString()}&limitLicense=true`
+      `http://localhost:3000/api/recipes?number=${count}&tags=${tags}&offset=${offset}&query=${query}&sort=${sort}&sortDirection=${sortDirection}&cuisine=${cuisines.toString()}&excludeCuisine=${excludeCuisine.toString()}&diet=${diets.toString()}&intolerances=${intolerances.toString()}&limitLicense=true`
     );
 
     if (!req.ok) {
