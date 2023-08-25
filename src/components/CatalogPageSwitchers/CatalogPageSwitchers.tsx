@@ -5,17 +5,23 @@ const CatalogPageSwitchers = ({
   totalRecipes,
   showedRecipes,
   searchParams,
+  baseUrl = "/recipes",
 }: {
   searchParams: { [key: string]: any };
   page: number;
   totalRecipes: number;
   showedRecipes: number;
+  baseUrl?: string;
 }) => {
   return (
     <nav className="flex mb-10 gap-3 items-end justify-center w-full ">
       {page - 1 > 1 && (
         <>
-          <PageSwitcher searchParams={searchParams} page={page}>
+          <PageSwitcher
+            baseUrl={baseUrl}
+            searchParams={searchParams}
+            page={page}
+          >
             1
           </PageSwitcher>
           <div>...</div>
@@ -23,6 +29,7 @@ const CatalogPageSwitchers = ({
       )}
       {page - 1 >= 1 && (
         <PageSwitcher
+          baseUrl={baseUrl}
           searchParams={searchParams}
           page={page}
           disabled={totalRecipes < (page - 1) * showedRecipes}
@@ -31,10 +38,11 @@ const CatalogPageSwitchers = ({
         </PageSwitcher>
       )}
 
-      <PageSwitcher searchParams={searchParams} page={page}>
+      <PageSwitcher baseUrl={baseUrl} searchParams={searchParams} page={page}>
         {page}
       </PageSwitcher>
       <PageSwitcher
+        baseUrl={baseUrl}
         searchParams={searchParams}
         page={page}
         disabled={totalRecipes <= page * showedRecipes}
@@ -42,6 +50,7 @@ const CatalogPageSwitchers = ({
         {page + 1}
       </PageSwitcher>
       <PageSwitcher
+        baseUrl={baseUrl}
         page={page}
         searchParams={searchParams}
         disabled={totalRecipes < (page + 1) * showedRecipes}
@@ -50,6 +59,7 @@ const CatalogPageSwitchers = ({
       </PageSwitcher>
       {page - 1 <= 1 && (
         <PageSwitcher
+          baseUrl={baseUrl}
           searchParams={searchParams}
           page={page}
           disabled={totalRecipes < (page + 2) * showedRecipes}
@@ -66,11 +76,13 @@ const PageSwitcher = ({
   page,
   disabled,
   searchParams,
+  baseUrl,
 }: {
   searchParams: { [key: string]: any };
   children: any;
   page: number;
   disabled?: boolean;
+  baseUrl: string;
 }) => {
   return (
     <Link
@@ -79,11 +91,17 @@ const PageSwitcher = ({
           ? "!bg-[#ff642f] text-white pointer-events-none"
           : "bg-[rgba(0,0,0,0.1)]"
       } ${disabled ? "pointer-events-none !bg-[rgba(0,0,0,0.2)]" : ""}`}
-      href={`/recipes${
-        parseInt(children) === 1
-          ? "?" + new URLSearchParams(searchParams).toString()
-          : "/" + children + "?" + new URLSearchParams(searchParams).toString()
-      }`}
+      href={
+        baseUrl +
+        `${
+          parseInt(children) === 1
+            ? "?" + new URLSearchParams(searchParams).toString()
+            : "/" +
+              children +
+              "?" +
+              new URLSearchParams(searchParams).toString()
+        }`
+      }
     >
       {children}
     </Link>

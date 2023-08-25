@@ -8,7 +8,7 @@ import type {
   diets,
   intolerances,
 } from "@/services/spoonacular/types";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import CheckboxInput from "@/ui/CheckbxInput";
 
 type Filters = {
@@ -79,16 +79,17 @@ const allCuisines: cuisines[] = [
 export default function Filters({
   toggleFilters,
   filtersToggled,
+  baseUrl,
 }: {
   toggleFilters: Function;
   filtersToggled: boolean;
+  baseUrl: string;
 }) {
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams()!;
 
   const filtersBlockRef = useRef<HTMLFormElement>(null);
-  const { register, handleSubmit, reset } = useForm({
+  const { register, handleSubmit, reset, getValues } = useForm({
     defaultValues: {
       diets: searchParams.get("diets")?.split(",") || undefined,
       excludeCuisine:
@@ -108,7 +109,7 @@ export default function Filters({
     }
 
     const finalQueryString = params.toString();
-    router.push(pathname + "?" + finalQueryString, { scroll: false });
+    router.push(baseUrl + "?" + finalQueryString, { scroll: false });
   };
 
   return (
@@ -151,52 +152,54 @@ export default function Filters({
           />
         </svg>
       </button>
-      <FiltersCategory label="Diets">
-        {allDiets.map((diet) => (
-          <CheckboxInput key={diet} register={register("diets")} value={diet}>
-            {diet}
-          </CheckboxInput>
-        ))}
-      </FiltersCategory>
-      <FiltersCategory label="Intolerances">
-        {allIntolerances.map((intolerance) => (
-          <CheckboxInput
-            key={intolerance}
-            register={register("intolerances")}
-            value={intolerance}
-          >
-            {intolerance}
-          </CheckboxInput>
-        ))}
-      </FiltersCategory>
-      <FiltersCategory label="Cuisines">
-        {allCuisines.map((cuisine) => (
-          <CheckboxInput
-            key={cuisine}
-            register={register("cuisine")}
-            value={cuisine}
-          >
-            {cuisine}
-          </CheckboxInput>
-        ))}
-      </FiltersCategory>
-      <FiltersCategory label="Exclude Cuisines">
-        {allCuisines.map((cuisine) => (
-          <CheckboxInput
-            key={cuisine}
-            register={register("excludeCuisine")}
-            value={cuisine}
-          >
-            {cuisine}
-          </CheckboxInput>
-        ))}
-      </FiltersCategory>
+      <div className="pl-3 mt-2">
+        <FiltersCategory label="Diets">
+          {allDiets.map((diet) => (
+            <CheckboxInput key={diet} register={register("diets")} value={diet}>
+              {diet}
+            </CheckboxInput>
+          ))}
+        </FiltersCategory>
+        <FiltersCategory label="Intolerances">
+          {allIntolerances.map((intolerance) => (
+            <CheckboxInput
+              key={intolerance}
+              register={register("intolerances")}
+              value={intolerance}
+            >
+              {intolerance}
+            </CheckboxInput>
+          ))}
+        </FiltersCategory>
+        <FiltersCategory label="Cuisines">
+          {allCuisines.map((cuisine) => (
+            <CheckboxInput
+              key={cuisine}
+              register={register("cuisine")}
+              value={cuisine}
+            >
+              {cuisine}
+            </CheckboxInput>
+          ))}
+        </FiltersCategory>
+        <FiltersCategory label="Exclude Cuisines">
+          {allCuisines.map((cuisine) => (
+            <CheckboxInput
+              key={cuisine}
+              register={register("excludeCuisine")}
+              value={cuisine}
+            >
+              {cuisine}
+            </CheckboxInput>
+          ))}
+        </FiltersCategory>
+      </div>
       <div className=" overflow-hidden bottom-0 w-[100%] justify-between flex mt-7 h-auto">
         <button
           type="button"
           className="px-7 py-2 border border-black rounded-lg text-black font-medium text-lg hover:border-[#ff642f] hover:bg-[#ff642f] transition-all duration-300 hover:text-white"
           onClick={() => {
-            router.push(pathname);
+            router.push(baseUrl);
             reset(
               {
                 diets: undefined,

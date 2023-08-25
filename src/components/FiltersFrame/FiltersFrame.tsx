@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Filters from "./Filters";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useCallback } from "react";
 
 const FiltersFrame = ({
@@ -10,15 +10,16 @@ const FiltersFrame = ({
   page,
   showedRecipes,
   recipesLength,
+  baseUrl = "/recipes",
 }: {
   recipesLength: number;
   showedRecipes: number;
   page: number;
   children: React.ReactNode;
   recipesCount: number;
+  baseUrl?: string;
 }) => {
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams()!;
 
   const [filtersToggled, setFiltersToggled] = useState(true);
@@ -65,9 +66,9 @@ const FiltersFrame = ({
         </button>
         <div>
           <span className="font-medium text-lg text-gray-400">
-            Showing {recipesCount !== 0 ? page * showedRecipes + 1 : 0} /{" "}
+            Showing {recipesCount !== 0 ? (page - 1) * showedRecipes + 1 : 0} /{" "}
             {Math.min(
-              page * showedRecipes + 1 + showedRecipes - 1,
+              (page - 1) * showedRecipes + 1 + showedRecipes - 1,
               recipesCount
             )}{" "}
             of {recipesCount} recipes
@@ -79,7 +80,7 @@ const FiltersFrame = ({
             <select
               onChange={(e) => {
                 router.push(
-                  pathname + "?" + createQueryString("sortBy", e.target.value)
+                  baseUrl + "?" + createQueryString("sortBy", e.target.value)
                 );
               }}
               value={searchParams.get("sortBy") || "random"}
@@ -104,7 +105,7 @@ const FiltersFrame = ({
             <select
               onChange={(e) => {
                 router.push(
-                  pathname + "?" + createQueryString("sortDir", e.target.value)
+                  baseUrl + "?" + createQueryString("sortDir", e.target.value)
                 );
               }}
               value={searchParams.get("sortDir") || "desc"}
@@ -123,6 +124,7 @@ const FiltersFrame = ({
         <Filters
           toggleFilters={toggleFilters}
           filtersToggled={filtersToggled}
+          baseUrl={baseUrl}
         />
         {children}
       </div>
