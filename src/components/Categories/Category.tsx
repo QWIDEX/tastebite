@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import Link from "next/link";
 
 const Category = ({
   label,
@@ -13,7 +14,8 @@ const Category = ({
   className?: string;
 }): React.ReactElement => {
   return (
-    <div
+    <Link
+      href={`/recipes/categories/${label}`}
       className={`flex group justify-center cursor-pointer items-center gap-2 flex-col ${className}`}
     >
       <Image
@@ -28,7 +30,7 @@ const Category = ({
       >
         {label}
       </h2>
-    </div>
+    </Link>
   );
 };
 

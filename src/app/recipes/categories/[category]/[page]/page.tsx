@@ -8,14 +8,14 @@ import H3 from "@/ui/H3";
 import emptyPlateImg from "@/images/emptyPlateImg.jpg";
 
 export default async function Category({
-  params: { category },
+  params: { category, page },
   searchParams,
 }: {
-  params: { category: string };
+  params: { category: string; page: string };
   searchParams: { [key: string]: any };
 }) {
   const recipes = await getRecipes({
-    offset: 0,
+    offset: parseInt(page) - 1,
     query: category,
     count: 20,
     sort: searchParams.sortBy,
@@ -31,7 +31,7 @@ export default async function Category({
       <FiltersFrame
         baseUrl={`/recipes/categories/${category}`}
         recipesCount={recipes.totalRecipes}
-        page={1}
+        page={parseInt(page)}
         showedRecipes={20}
         recipesLength={recipes.recipes.length}
       >
@@ -55,7 +55,7 @@ export default async function Category({
             searchParams={searchParams}
             baseUrl={`/recipes/categories/${category}`}
             showedRecipes={20}
-            page={1}
+            page={parseInt(page)}
             totalRecipes={recipes.totalRecipes}
           />
         </div>

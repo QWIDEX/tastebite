@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const SearchHandler = ({
@@ -9,18 +10,30 @@ const SearchHandler = ({
   activeWidth?: string;
 }) => {
   const [active, setActive] = useState(false);
+  const [query, setQuery] = useState("");
+
+  const router = useRouter();
+
+  const handleSearch = () => {
+    router.push("/recipes/search/" + query);
+  };
 
   return (
     <>
       <div></div>
-      <div
+      <form
         className={`w-6 absolute left-0 flex gap-3 transition-all justify-self-start duration-300 items-center bg-white overflow-hidden ${className}`}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSearch();
+        }}
         style={active ? { width: activeWidth } : {}}
       >
         <button
           className="opacity-0 group transition-all duration-300"
           style={active ? { opacity: 1 } : {}}
           onClick={() => setActive(false)}
+          type="button"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -36,12 +49,18 @@ const SearchHandler = ({
         </button>
         <input
           type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
           className="w-full relative border-b border-b-gray-300 mr-8 block px-3 py-1 "
         />
         <button
           style={active ? { right: 0, left: "auto" } : {}}
           className="group w-fit absolute right-[calc(100%-26px)] bg-white transition-all duration-300"
-          onClick={active ? () => {} : () => setActive(true)}
+          type="button"
+          onClick={() => {
+            if (active) handleSearch();
+            else setActive(true);
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +75,7 @@ const SearchHandler = ({
             />
           </svg>
         </button>
-      </div>
+      </form>
     </>
   );
 };

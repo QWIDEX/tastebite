@@ -91,11 +91,10 @@ export default function Filters({
   const filtersBlockRef = useRef<HTMLFormElement>(null);
   const { register, handleSubmit, reset, getValues } = useForm({
     defaultValues: {
-      diets: searchParams.get("diets")?.split(",") || undefined,
-      excludeCuisine:
-        searchParams.get("excludeCuisine")?.split(",") || undefined,
-      cuisine: searchParams.get("cuisine")?.split(",") || undefined,
-      intolerances: searchParams.get("intolerances")?.split(",") || undefined,
+      diets: searchParams.get("diets")?.split(",") || [],
+      excludeCuisine: searchParams.get("excludeCuisine")?.split(",") || [],
+      cuisine: searchParams.get("cuisine")?.split(",") || [],
+      intolerances: searchParams.get("intolerances")?.split(",") || [],
     },
   });
 
@@ -202,12 +201,12 @@ export default function Filters({
             router.push(baseUrl);
             reset(
               {
-                diets: undefined,
-                excludeCuisine: undefined,
-                cuisine: undefined,
-                intolerances: undefined,
+                diets: [],
+                excludeCuisine: [],
+                cuisine: [],
+                intolerances: [],
               },
-              { keepValues: false, keepDefaultValues: false }
+              { keepDefaultValues: false }
             );
           }}
         >
