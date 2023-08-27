@@ -4,6 +4,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import Providers from "@/components/Providers/Providers";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   description: "App for sharing and searching recipes",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -29,10 +30,12 @@ export default function RootLayout({
       <body
         className={`${inter.variable} !font-sans ${playfairDisplay.variable}`}
       >
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <Toaster />
+        <Providers>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );
