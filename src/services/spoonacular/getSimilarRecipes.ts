@@ -5,9 +5,17 @@ export default async function getSimilarRecipes(
   number: number
 ) {
   try {
-    const req = await fetch(
-      `http://localhost:3000/api/recipes/${id}/similar?number=${number}`
-    );
+    let req;
+    if (process?.env?.VERCEL === "1") {
+      req = await fetch(
+        `https://${process.env
+          .VERCEL_URL!}/api/recipes/${id}/similar?number=${number}`
+      );
+    } else {
+      req = await fetch(
+        `http://localhost:3000/api/recipes/${id}/similar?number=${number}`
+      );
+    }
 
     if (!req.ok) {
       throw new Error(`Request failed with status: ${req.status}`);

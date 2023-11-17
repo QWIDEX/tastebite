@@ -28,9 +28,17 @@ const getRecipes = async ({
   }
 
   try {
-    const req = await fetch(
-      `http://localhost:3000/api/recipes?number=${count}&tags=${tags}&offset=${offset}&query=${query}&sort=${sort}&sortDirection=${sortDirection}&cuisine=${cuisines.toString()}&excludeCuisine=${excludeCuisine.toString()}&diet=${diets.toString()}&intolerances=${intolerances.toString()}&limitLicense=true`
-    );
+    let req;
+    if (process?.env?.VERCEL === "1") {
+      req = await fetch(
+        `https://${process.env
+          .VERCEL_URL!}/api/recipes?number=${count}&tags=${tags}&offset=${offset}&query=${query}&sort=${sort}&sortDirection=${sortDirection}&cuisine=${cuisines.toString()}&excludeCuisine=${excludeCuisine.toString()}&diet=${diets.toString()}&intolerances=${intolerances.toString()}&limitLicense=true`
+      );
+    } else {
+      req = await fetch(
+        `http://localhost:3000/api/recipes?number=${count}&tags=${tags}&offset=${offset}&query=${query}&sort=${sort}&sortDirection=${sortDirection}&cuisine=${cuisines.toString()}&excludeCuisine=${excludeCuisine.toString()}&diet=${diets.toString()}&intolerances=${intolerances.toString()}&limitLicense=true`
+      );
+    }
 
     if (!req.ok) {
       throw new Error(`Request failed with status: ${req.status}`);

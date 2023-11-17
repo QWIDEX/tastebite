@@ -11,10 +11,19 @@ export default async function getRandomRecipes(
   }
 
   try {
-    const req = await fetch(
-      `http://localhost:3000/api/recipes/random?number=${count}&tags=${tags}&limitLicense=true`,
-      { next: { revalidate: revalidate } }
-    );
+    let req;
+    if (process?.env?.VERCEL === "1") {
+      req = await fetch(
+        `https://${process.env
+          .VERCEL_URL!}/api/recipes/random?number=${count}&tags=${tags}&limitLicense=true`,
+        { next: { revalidate: revalidate } }
+      );
+    } else {
+      req = await fetch(
+        `http://localhost:3000/api/recipes/random?number=${count}&tags=${tags}&limitLicense=true`,
+        { next: { revalidate: revalidate } }
+      );
+    }
 
     if (!req.ok) {
       throw new Error(`Request failed with status: ${req.status}`);
