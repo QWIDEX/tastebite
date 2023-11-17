@@ -17,7 +17,7 @@ export default async function Home() {
     <div>
       <RecipesSwiper recipes={recipes} />
       <section className="relative p-5 sm:p-0 sm:w-10/12 mx-auto">
-        <H2 className="sm:ml-0 ml-5 mt-10">Random Recipes</H2>
+        <H2 className="sm:ml-0 ml-5 mb-3 mt-10">Random Recipes</H2>
         <Catalog RecipeCard={RecipeCard} recipes={recipes} />
       </section>
       <CategoriesSmall className="w-11/12 sm:w-10/12 !justify-start mx-auto mt-5" />

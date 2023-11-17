@@ -1,40 +1,35 @@
-import { MongoClient, ObjectId } from "mongodb";
+import { ObjectId } from "mongodb";
 import { RecipeReviews } from "./types";
+import getClient from "./getClient";
 
 export default async function getRecipeReviews(
   id: string
 ): Promise<RecipeReviews> {
-  const uri = process.env.MONGODB_URI!;
-
-  const client = new MongoClient(uri);
-
   try {
+    const client = await getClient();
     const database = client.db("tastebite");
-
     const recipesReviews = database.collection("recipesReviews");
 
-    const query = { id: id };
-
-    let recipeReviews: any = await recipesReviews.findOne(query);
+    let recipeReviews: any = await recipesReviews.findOne({ recipeId: id });
 
     if (!recipeReviews) {
       const objectId = new ObjectId();
-      await recipesReviews.insertOne({ _id: objectId, reviews: [], id });
-      console.log(objectId.toString());
       recipeReviews = {
         _id: objectId,
-        docId: objectId.toString(),
+        recipeId: id,
         reviews: [],
       };
-    } else {
-      recipeReviews = { ...recipeReviews, docId: recipeReviews._id.toString() };
+      await recipesReviews.insertOne(recipeReviews);
     }
 
-    if (recipeReviews.id) delete recipeReviews.id;
+    recipeReviews = { ...recipeReviews, docId: recipeReviews._id.toString() };
+
+    if (recipeReviews.recipeId) delete recipeReviews.recipeId;
     delete recipeReviews._id;
 
     return recipeReviews;
-  } finally {
-    await client.close();
+  } catch (err) {
+    console.log(err);
+    throw new Error();
   }
 }

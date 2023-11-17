@@ -25,7 +25,7 @@ const FiltersCategory = ({
         }}
         className="flex group justify-between w-full items-center"
       >
-        <H3 className="!font-medium">{label}</H3>
+        <H3>{label}</H3>
         <svg
           style={
             toggled

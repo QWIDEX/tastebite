@@ -89,7 +89,7 @@ export default function Filters({
   const searchParams = useSearchParams()!;
 
   const filtersBlockRef = useRef<HTMLFormElement>(null);
-  const { register, handleSubmit, reset, getValues } = useForm({
+  const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       diets: searchParams.get("diets")?.split(",") || [],
       excludeCuisine: searchParams.get("excludeCuisine")?.split(",") || [],

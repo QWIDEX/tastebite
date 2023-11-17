@@ -14,7 +14,7 @@ export default function SquareButton({
   return (
     <button
       type={type}
-      className={`text-lg font-medium transition-all duration-300 hover:bg-black hover:text-white border-black rounded-sm border px-7 py-2 ${className}`}
+      className="px-7 py-2 rounded-lg  hover:bg-[#ff642f] shadow-lg hover:shadow-md bg-black font-medium text-lg text-white transition-all duration-300"
       onClick={(e) => onClick(e)}
     >
       {children}
